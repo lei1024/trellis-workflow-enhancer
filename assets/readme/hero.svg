@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Trellis Workflow Enhancer</title>
+  <desc id="desc">A technical workflow map from Trellis through verified Matt and Waza capabilities to user-selected optional enhancements.</desc>
+  <rect width="1200" height="360" rx="24" fill="#0B1017"/>
+  <path d="M56 72H1144M56 288H1144" stroke="#263443" stroke-width="2"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, sans-serif">
+    <text x="58" y="82" fill="#91A4B7" font-size="18" letter-spacing="2">AGENT WORKFLOW / OPT-IN ENHANCEMENT</text>
+    <text x="56" y="154" fill="#F3F7FA" font-size="58" font-weight="700">Trellis Workflow</text>
+    <text x="56" y="214" fill="#F3F7FA" font-size="58" font-weight="700">Enhancer</text>
+    <text x="58" y="253" fill="#B6C5D2" font-size="24">Evidence first. Optional by design.</text>
+    <text x="58" y="316" fill="#6E8498" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">ANALYZE  /  COMPARE  /  CHOOSE  /  APPLY</text>
+  </g>
+  <g transform="translate(700 70)" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, sans-serif">
+    <path d="M174 54H218M422 54H444V160H174" stroke="#6B8297" stroke-width="3" fill="none"/>
+    <path d="M211 46L224 54L211 62M166 152L174 160L166 168" fill="none" stroke="#6B8297" stroke-width="3"/>
+    <rect x="0" y="16" width="174" height="76" rx="12" fill="#152331" stroke="#416074" stroke-width="2"/>
+    <text x="22" y="48" fill="#93ACBF" font-size="18">BASELINE</text>
+    <text x="22" y="76" fill="#F3F7FA" font-size="28" font-weight="700">TRELLIS</text>
+    <rect x="224" y="16" width="220" height="76" rx="12" fill="#162A2A" stroke="#3F8578" stroke-width="2"/>
+    <text x="246" y="48" fill="#A6DCD2" font-size="18">INVENTORY</text>
+    <text x="246" y="76" fill="#F3F7FA" font-size="26" font-weight="700">MATT + WAZA</text>
+    <rect x="0" y="122" width="174" height="76" rx="12" fill="#2E261A" stroke="#A98142" stroke-width="2"/>
+    <text x="22" y="154" fill="#E7C58C" font-size="18">OPTIONS</text>
+    <text x="22" y="182" fill="#F3F7FA" font-size="27" font-weight="700">COMPARE</text>
+    <path d="M174 160H218" stroke="#6B8297" stroke-width="3" fill="none"/>
+    <path d="M211 152L224 160L211 168" fill="none" stroke="#6B8297" stroke-width="3"/>
+    <rect x="224" y="122" width="220" height="76" rx="12" fill="#213021" stroke="#58A569" stroke-width="2"/>
+    <text x="246" y="154" fill="#B9E6C1" font-size="18">CONTROL</text>
+    <text x="246" y="182" fill="#F3F7FA" font-size="27" font-weight="700">YOU CHOOSE</text>
+    <text x="0" y="246" fill="#B6C5D2" font-size="20">Selected change returns to local Trellis artifacts</text>
+    <text x="0" y="273" fill="#7690A6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">NO SELECTION = NO MODIFICATION</text>
+  </g>
+</svg>
