@@ -2,6 +2,8 @@
   <img src="./assets/readme/hero.svg" width="100%" alt="Trellis Workflow Enhancer turns a Trellis workflow and verified Matt and Waza capabilities into optional, user-selected upgrades.">
 </p>
 
+[中文](./README.zh-CN.md)
+
 # Trellis Workflow Enhancer
 
 An opt-in skill for improving an existing Trellis workflow without handing
@@ -98,6 +100,7 @@ change independently.
 ```text
 trellis-workflow-enhancer/
 ├── SKILL.md
+├── README.zh-CN.md
 ├── agents/openai.yaml
 ├── assets/readme/hero.svg
 └── references/
