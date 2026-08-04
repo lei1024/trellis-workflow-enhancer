@@ -9,7 +9,9 @@
 An opt-in skill for improving an existing Trellis workflow without handing
 control to another framework. It inventories the repository, verifies currently
 installed and upstream Matt Pocock and Waza capabilities, then presents a
-before-to-after decision table. Nothing changes until the user chooses options.
+before-to-after decision table. Nothing changes until the user chooses options;
+after selection, the integration is applied and verified through the real prompt
+hook instead of being declared complete from documentation alone.
 
 ## What It Produces
 
@@ -22,6 +24,10 @@ The first run is analysis only. It gives the user:
   and the exact affected files;
 - a `no change` option alongside every recommended bundle.
 
+An applied integration also produces `.trellis/skill-integration.json`, which
+records each skill's invocation mode, Trellis phase, durable artifact handoff,
+gate, hook markers, and review order.
+
 ## Before And After
 
 | Before | Optional after |
@@ -31,18 +37,23 @@ The first run is analysis only. It gives the user:
 | Tests, diagnosis, and manual checks blur together | A named feedback loop, TDD only at a real seam, and reproduction before repair |
 | All changes receive the same review cost | Independent review only for declared risk classes |
 | Visual work can escape the engineering plan | Waza visual exploration returns states and acceptance criteria to `design.md` |
+| Skills are installed or mentioned but never surface at runtime | Workflow-state routing, a configured prompt hook, artifact contracts, and smoke evidence |
 | Tool popularity decides integration | Observed gaps, explicit tradeoffs, and user-selected IDs decide integration |
 
 ## How It Works
 
-1. **Inventory**: read the target's Trellis files, task state, specs, code
-   structure, and executable validation surface.
+1. **Inventory**: read the target's Trellis files, task state, specs, hooks,
+   code structure, and executable validation surface.
 2. **Verify**: inspect installed Matt/Waza skills and compare them with their
    official upstream sources in read-only mode.
-3. **Compare**: show a compact `ID | before | optional after | benefit | cost`
-   table, including `N0` for no change.
+3. **Compare**: show a compact decision table, including `I1` runtime binding
+   and `N0` no change.
 4. **Choose**: wait for the user to select IDs, bundles, or no change.
-5. **Apply**: make only selected, project-local integrations and verify them.
+5. **Apply**: update only selected project-local workflow routes and write the
+   machine-readable integration contract.
+6. **Prove**: run the verifier and prompt-hook smoke test. Report installed,
+   routed, phase-bound, hook-configured, runtime-observed, and integrated as
+   separate evidence levels.
 
 Trellis continues to own task lifecycle, package scope, specification loading,
 and acceptance evidence. Matt and Waza are never copied into the project or
@@ -66,6 +77,7 @@ enhancements before changing any files.
 
 | ID | Bundle | Typical trigger |
 | --- | --- | --- |
+| I1 | Runtime binding and evidence | Any selected integration; binds routes to state blocks, hooks, artifacts, and smoke verification |
 | S1 | Scope and specs | multi-root codebase, stale templates, or ambiguous ownership |
 | D1 | Decision and knowledge | unclear product rule, domain term, UX state, or module ownership |
 | F1 | Feedback and diagnosis | behavior change, missing confidence, bug, or performance regression |
@@ -77,9 +89,29 @@ enhancements before changing any files.
 The catalog and comparison template are intentionally generic. The skill removes
 unsupported rows rather than forcing every bundle into every repository.
 
+Any applied bundle includes `I1`. `I1` does not make a user-invoked skill run
+automatically; it proves whether the hook surfaced the route and whether the
+skill result has a Trellis artifact handoff.
+
+## Verify A Real Integration
+
+After selecting options, run the bundled verifier against the target repository:
+
+```bash
+python3 <path-to-trellis-workflow-enhancer>/scripts/verify_integration.py \
+  <target-repository> --smoke
+```
+
+The command fails when the manifest, local skill source, route table, phase
+breadcrumb, hook wiring, invocation mode, artifact handoff, or fixed
+`trellis-check`-before-review order is missing. `--smoke` executes the configured
+per-turn hook once and checks its output markers.
+
 ## Safety Rules
 
 - Never modify a target before an explicit option selection.
+- Never call an integration active because a skill is installed or a route is
+  written in prose; require `skill-integration.json` and verifier evidence.
 - Never claim a locally installed skill is the latest without an upstream check.
 - Never auto-install or update Matt, Waza, Trellis, global settings, or hooks.
 - Never change `.gitignore`, stage, commit, push, archive tasks, or rewrite
@@ -103,8 +135,11 @@ trellis-workflow-enhancer/
 ├── README.zh-CN.md
 ├── agents/openai.yaml
 ├── assets/readme/hero.svg
+├── scripts/verify_integration.py
+├── tests/test_verify_integration.py
 └── references/
     ├── comparison-template.md
+    ├── integration-contract.md
     └── integration-catalog.md
 ```
 

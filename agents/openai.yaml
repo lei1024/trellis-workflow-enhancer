@@ -1,4 +1,4 @@
 interface:
   display_name: "Trellis Workflow Enhancer"
-  short_description: "Build optional, evidence-backed Trellis workflow upgrades."
-  default_prompt: "Use $trellis-workflow-enhancer to analyze this repository and present optional Trellis enhancements."
+  short_description: "Audit and prove real Trellis skill integrations."
+  default_prompt: "Use $trellis-workflow-enhancer to audit this repository, present optional Matt/Waza integrations, and verify any selected route through the real Trellis hook."

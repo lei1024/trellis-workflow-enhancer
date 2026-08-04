@@ -6,7 +6,7 @@
 
 # Trellis Workflow Enhancer
 
-一个用于增强既有 Trellis 工作流的可选 skill，不会把流程控制权交给另一套框架。它先盘点目标仓库，核验本地已安装及上游最新的 Matt Pocock 和 Waza skill 能力，再给出增强前后的对比表。用户未选择前，不会修改任何内容。
+一个用于增强既有 Trellis 工作流的可选 skill，不会把流程控制权交给另一套框架。它先盘点目标仓库，核验本地已安装及上游最新的 Matt Pocock 和 Waza skill 能力，再给出增强前后的对比表。用户未选择前不会修改任何内容；用户选择后，必须通过真实 prompt hook 和 smoke test 才能报告融合完成，不再把文档存在误报为融合成功。
 
 ## 首次运行产出
 
@@ -17,6 +17,8 @@
 - 包含收益、成本、风险、前置条件和精确影响文件的增强对比；
 - 与每个建议并列的 `N0`「不变更」选项。
 
+应用后的融合还会生成 `.trellis/skill-integration.json`，记录每个 skill 的调用模式、Trellis 阶段、持久化产物、阶段门禁、hook 标记和审查顺序。
+
 ## 增强前后
 
 | 增强前 | 选择增强后 |
@@ -26,15 +28,17 @@
 | 测试、诊断和手工检查混在一起 | 命名明确的反馈闭环；只在真实测试接缝使用 TDD，修复前先复现问题 |
 | 所有改动承担相同的审查成本 | 仅对已定义的高风险改动进行独立审查 |
 | 视觉工作可能脱离工程计划 | Waza 的视觉探索将状态和验收条件回写到 `design.md` |
+| skill 已安装或文档已写入，但运行时没有触发 | workflow-state 路由、实际 prompt hook、产物契约和 smoke 证据 |
 | 因 skill 流行度决定是否集成 | 由观察到的缺口、明确的取舍和用户选择的 ID 决定 |
 
 ## 工作方式
 
-1. **盘点**：读取目标仓库的 Trellis 文件、任务状态、规范、代码结构和可执行校验入口。
+1. **盘点**：读取目标仓库的 Trellis 文件、任务状态、规范、hook、代码结构和可执行校验入口。
 2. **核验**：检查已安装的 Matt/Waza skill，并在只读模式下与官方上游来源比对。
-3. **对比**：展示紧凑的 `ID | 增强前 | 可选增强后 | 收益 | 成本` 表格，其中包含 `N0` 不变更选项。
+3. **对比**：展示紧凑的决策表，其中包含 `I1` 运行时绑定和 `N0` 不变更选项。
 4. **选择**：等待用户选择具体 ID、组合或不变更。
-5. **应用**：仅实施被选中的项目级集成，并使用仓库实际工具验证。
+5. **应用**：仅实施被选中的项目级集成，并写入机器可读的融合契约。
+6. **证明**：运行 verifier 和 prompt-hook smoke test，分别报告已安装、已路由、已绑定阶段、已配置 hook、运行时已观察和已融合。
 
 Trellis 始终负责任务生命周期、包范围、规范加载与验收证据。不会把 Matt 或 Waza 的内容复制进项目，也不会将它们视作竞争性的任务管理系统。
 
@@ -55,6 +59,7 @@ npx skills@latest add lei1024/trellis-workflow-enhancer
 
 | ID | 组合 | 常见触发条件 |
 | --- | --- | --- |
+| I1 | 运行时绑定与证据 | 任何被选择的融合；绑定状态块、hook、产物和 smoke 校验 |
 | S1 | 范围与规范 | 多根代码库、陈旧模板或归属不清 |
 | D1 | 决策与知识 | 产品规则、领域术语、UX 状态或模块归属不清 |
 | F1 | 反馈与诊断 | 行为变更、缺乏信心、缺陷或性能回归 |
@@ -65,9 +70,23 @@ npx skills@latest add lei1024/trellis-workflow-enhancer
 
 目录与对比模板刻意保持通用。skill 会移除没有得到目标仓库和上游能力证据支持的行，而不是向每个仓库强行套用全部组合。
 
+任何应用的组合都包含 `I1`。`I1` 不会让用户显式调用的 skill 变成自动执行；它只证明 hook 是否暴露了路由，以及 skill 结果是否有 Trellis 产物交接。
+
+## 验证真实融合
+
+选择增强项后，对目标仓库运行：
+
+```bash
+python3 <path-to-trellis-workflow-enhancer>/scripts/verify_integration.py \
+  <target-repository> --smoke
+```
+
+如果 manifest、本地 skill、路由表、阶段 breadcrumb、hook、调用模式、产物交接或 `trellis-check` 先于第三方审查的顺序缺失，命令会失败。`--smoke` 会实际执行一次 per-turn hook，并检查输出标记。
+
 ## 安全边界
 
 - 未得到明确的选项选择前，绝不修改目标仓库。
+- 绝不因为 skill 已安装或文档出现路由就报告融合完成；必须有 `skill-integration.json` 和 verifier 证据。
 - 未核验上游来源前，绝不把本地已安装 skill 称为最新版本。
 - 绝不自动安装或更新 Matt、Waza、Trellis、全局设置或 hook。
 - 不会因增强建议而修改 `.gitignore`、暂存、提交、推送、归档任务或改写历史。
@@ -86,8 +105,11 @@ trellis-workflow-enhancer/
 ├── README.zh-CN.md
 ├── agents/openai.yaml
 ├── assets/readme/hero.svg
+├── scripts/verify_integration.py
+├── tests/test_verify_integration.py
 └── references/
     ├── comparison-template.md
+    ├── integration-contract.md
     └── integration-catalog.md
 ```
 
