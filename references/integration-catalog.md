@@ -34,11 +34,13 @@ are examples, not a permanent contract.
 
 | Area | Typical Matt capability | Typical Waza capability | Trellis integration boundary |
 | --- | --- | --- | --- |
-| Unclear requirements | explicit `grill-with-docs` / `grill-me`; model-invoked `grilling` | `think` for a decision-complete plan | one deep Phase 1.1 route; decisions return to task artifacts |
+| Unclear requirements | explicit `grill-with-docs` / `grill-me`; model-invoked `grilling` (rounds: whole current frontier per numbered round) | `think` for a decision-complete plan | one deep Phase 1.1 route; decisions return to task artifacts |
 | Domain and module design | model-invoked `domain-modeling`, `codebase-design`; explicit `wayfinder` for very large work | none by default | preserve Trellis planning/status; write decisions to `CONTEXT.md`, ADRs, `prd.md`, or `design.md` |
-| Concrete state or UI question | model-invoked `prototype` | `ui` | prototype/UI verdict and acceptance states return to `design.md` |
+| Concrete state or UI question | model-invoked `prototype` (logic branch = single shareable HTML file) | `ui` | prototype/UI verdict and acceptance states return to `design.md` |
 | External facts | model-invoked `research` | `read`, `learn` | cited findings go under the active task `research/` directory |
-| Behavior feedback | model-invoked `tdd` | none by default | implementation plan records a real seam and feedback command |
+| Manual-only infra steps (provisioning, credentials, CI secrets, one-off migration) | model-invoked `wizard` | none by default | one-run bash helper; record resulting values/state in task artifact, then delete or keep per user choice |
+| Decisions the user cannot answer alone | explicit `to-questionnaire` | none by default | one-off Markdown questionnaire; filled-in decisions return to `prd.md` / `design.md` |
+| A model message did not land | explicit `wait-what` | none by default | no artifact; re-pitch in plain domain language and continue the current phase |
 | Bugs and regressions | model-invoked `diagnosing-bugs` | `hunt` | reproduce and confirm root cause before repair; record evidence in task artifacts |
 | Review | model-invoked `code-review` | `check` for release/merge/audit | independent review only after Trellis check and only for selected risk |
 | Documentation | none by default | `write` | source and task ownership remain in Trellis |
@@ -71,8 +73,8 @@ the brand:
 
 | Class | Matt examples | Integration behavior |
 | --- | --- | --- |
-| User-invoked | `ask-matt`, `grill-with-docs`, `grill-me`, `triage`, `improve-codebase-architecture`, `setup-matt-pocock-skills`, `to-spec`, `to-tickets`, `implement`, `wayfinder`, `handoff`, `teach`, `writing-great-skills` | Route as explicit; hook surfaces the command and waits |
-| Model-invoked | `prototype`, `diagnosing-bugs`, `research`, `tdd`, `domain-modeling`, `codebase-design`, `code-review`, `resolving-merge-conflicts`, `grilling` | Route as an automatic candidate only when the task intent matches |
+| User-invoked | `ask-matt`, `grill-with-docs`, `grill-me`, `triage`, `improve-codebase-architecture`, `setup-matt-pocock-skills`, `to-spec`, `to-tickets`, `implement`, `wayfinder`, `handoff`, `teach`, `writing-for-agents` (renamed from `writing-great-skills`), `to-questionnaire`, `wait-what` | Route as explicit; hook surfaces the command and waits |
+| Model-invoked | `prototype`, `diagnosing-bugs`, `research`, `tdd`, `domain-modeling`, `codebase-design`, `code-review`, `resolving-merge-conflicts`, `grilling`, `wizard` | Route as an automatic candidate only when the task intent matches |
 
 Waza's current eight-skill set is `think`, `ui`, `check`, `hunt`, `write`,
 `learn`, `read`, and `health`. Verify each local frontmatter and route its
