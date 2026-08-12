@@ -6,8 +6,8 @@
 
 # Trellis Workflow Enhancer
 
-An opt-in skill for improving an existing Trellis workflow without handing
-control to another framework. It inventories the repository, verifies currently
+An opt-in Trellis workflow integration skill for AI coding agents. It improves
+an existing Trellis workflow without handing control to another framework. It inventories the repository, verifies currently
 installed and upstream Matt Pocock and Waza capabilities, then presents a
 before-to-after decision table. Nothing changes until the user chooses options;
 after selection, the integration is applied and verified through the real prompt

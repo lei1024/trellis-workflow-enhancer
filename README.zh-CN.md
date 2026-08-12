@@ -6,7 +6,7 @@
 
 # Trellis Workflow Enhancer
 
-一个用于增强既有 Trellis 工作流的可选 skill，不会把流程控制权交给另一套框架。它先盘点目标仓库，核验本地已安装及上游最新的 Matt Pocock 和 Waza skill 能力，再给出增强前后的对比表。用户未选择前不会修改任何内容；用户选择后，必须通过真实 prompt hook 和 smoke test 才能报告融合完成，不再把文档存在误报为融合成功。
+一个面向 AI 编程代理的可选 Trellis 工作流集成 skill，用于增强既有 Trellis 工作流，而不会把流程控制权交给另一套框架。它先盘点目标仓库，核验本地已安装及上游最新的 Matt Pocock 和 Waza skill 能力，再给出增强前后的对比表。用户未选择前不会修改任何内容；用户选择后，必须通过真实 prompt hook 和 smoke test 才能报告融合完成，不再把文档存在误报为融合成功。
 
 ## 首次运行产出
 
